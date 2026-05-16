@@ -12,14 +12,14 @@ function Home() {
 
         <button
           style={HomeStyles.primaryBtn}
-          onClick={() => navigate("/email-signup")}
+          onClick={() => navigate("/emailSignUp")}
         >
           Continue with Email
         </button>
 
         <button
           style={HomeStyles.secondaryBtn}
-          onClick={() => navigate("/mobile-signup")}
+          onClick={() => navigate("/mobileSignup")}
         >
           Continue with Mobile
         </button>
@@ -28,7 +28,7 @@ function Home() {
       Already have an account?{" "}
       <span
         style={HomeStyles.link}
-        onClick={() => navigate('./signIn')}
+        onClick={() => navigate('/signIn')}
       >
         Login
       </span>

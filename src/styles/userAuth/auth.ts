@@ -15,6 +15,7 @@ export const authStyles = {
   },
   title: {
     marginBottom: "20px",
+    color: "black"
   },
   input: {
     width: "92%",

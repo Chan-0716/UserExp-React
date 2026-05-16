@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { signUpWithEmail } from "../../services/userAuth/auth";
 import { authStyles } from "../../styles/userAuth/auth";
+import { useNavigate } from "react-router-dom";
 
 function EmailSignup() {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -24,6 +26,7 @@ function EmailSignup() {
       const result = await signUpWithEmail(form);
       alert("Account created successfully!");
       console.log(result);
+      navigate("/signIn");
     } catch (err: any) {
       alert(err.message || "Signup failed");
     } finally {

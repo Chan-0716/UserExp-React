@@ -1,23 +1,33 @@
 export const expenseStyles = {
   container: {
-    height: "100vh",
+    minHeight: "100vh",
+    width: "100%",
     display: "flex",
-    justifyContent: "center",
+    flexDirection: "column" as const,
     alignItems: "center",
-    backgroundColor: "#f5f5f5",
-  },
-  card: {
-    width: "300px",
-    background: "#fff",
-    padding: "15px",
-    borderRadius: "10px",
-    boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+    backgroundColor: "#e5d091",
+    padding: "20px",
+    boxSizing: "border-box" as const,
   },
   cardContainer: {
-  display: "flex",
-  gap: "20px",
-},
+    display: "flex",
+    flexWrap: "wrap" as const,
+    gap: "16px",
+    justifyContent: "center",
+    width: "100%",
+    maxWidth: "1100px",
+  },
+  card: {
+    flex: "1 1 250px",
+    maxWidth: "350px",
+    padding: "20px",
+    borderRadius: "8px",
+    backgroundColor: "#fff",
+    boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+    textAlign: "center" as const,
+  },
   title: {
+    alignSelf: "center",
     marginBottom: "20px",
   },
   input: {
@@ -41,7 +51,7 @@ export const expenseStyles = {
   buttonContainer: {
     display: "flex",
     gap: "10px",
-    justifyContent: "center", // aligns buttons to the left
+    justifyContent: "center" as const,
     marginBottom: "20px",
   },
   emailButton: {
@@ -65,7 +75,7 @@ export const expenseStyles = {
   resendButtonContainer: {
     display: "flex",
     gap: "10px",
-    justifyContent: "flex-end", // aligns buttons to the left
+    justifyContent: "flex-end" as const,
     marginBottom: "20px",
   },
   resendButton: {
@@ -79,7 +89,7 @@ export const expenseStyles = {
     cursor: "pointer",
     fontSize: "16px",
   },
-   primaryBtn: {
+  primaryBtn: {
     width: "100%",
     padding: "12px",
     marginBottom: "10px",
@@ -101,5 +111,116 @@ export const expenseStyles = {
     cursor: "pointer",
     fontSize: "16px",
   },
-  link: { color: 'blue', textDecoration: 'underline', cursor: 'pointer' }
+  link: {
+    color: "blue",
+    textDecoration: "underline",
+    cursor: "pointer",
+  },
+
+  // Bottom Nav
+  bottomNav: {
+    position: "fixed" as const,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    display: "flex",
+    justifyContent: "space-around" as const,
+    backgroundColor: "#fff",
+    borderTop: "1px solid #ddd",
+    padding: "10px 0 16px",
+    zIndex: 100,
+  },
+  navItem: {
+    display: "flex" as const,
+    flexDirection: "column" as const,
+    alignItems: "center" as const,
+    gap: "4px",
+    background: "transparent",
+    border: "none",
+    cursor: "pointer",
+    padding: "4px 16px",
+    fontFamily: "inherit",
+  },
+  navIcon: {
+    width: "24px",
+    height: "24px",
+  },
+  navLabel: {
+    fontSize: "11px",
+  },
+
+  // Recent Expenses
+  recentSection: {
+    width: "100%",
+    maxWidth: "700px",
+    marginTop: "20px",
+    paddingBottom: "80px",
+  },
+  recentHeader: {
+    display: "flex" as const,
+    justifyContent: "space-between" as const,
+    alignItems: "center" as const,
+    marginBottom: "12px",
+  },
+  recentTitle: {
+    fontSize: "16px",
+    fontWeight: "500" as const,
+    color: "#2C2C2A",
+  },
+  addExpenseBtn: {
+    background: "#534AB7",
+    color: "#fff",
+    border: "none",
+    borderRadius: "8px",
+    padding: "8px 16px",
+    cursor: "pointer",
+    fontSize: "13px",
+    fontWeight: "500" as const,
+    display: "flex" as const,
+    alignItems: "center" as const,
+    gap: "6px",
+  },
+  expenseItem: {
+    display: "flex" as const,
+    alignItems: "center" as const,
+    gap: "12px",
+    backgroundColor: "#fff",
+    borderRadius: "12px",
+    border: "0.5px solid #ddd",
+    padding: "12px 16px",
+    marginBottom: "8px",
+  },
+  expenseIconCircle: {
+    width: "36px",
+    height: "36px",
+    borderRadius: "50%",
+    overflow: "hidden" as const,
+    flexShrink: 0,
+    display: "flex" as const,
+    alignItems: "center" as const,
+    justifyContent: "center" as const,
+    backgroundColor: "#f0f0f0",
+  },
+  expenseIconImg: {
+    width: "20px",
+    height: "20px",
+  },
+  expenseInfo: {
+    flex: 1,
+  },
+  expenseName: {
+    fontSize: "14px",
+    fontWeight: "500" as const,
+    color: "#2C2C2A",
+  },
+  expenseDate: {
+    fontSize: "12px",
+    color: "#888",
+    marginTop: "2px",
+  },
+  expenseAmount: {
+    fontSize: "15px",
+    fontWeight: "500" as const,
+    color: "#A32D2D",
+  },
 };

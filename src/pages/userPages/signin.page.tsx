@@ -32,7 +32,11 @@ function SignIn() {
     try {
       const res = await loginWithEmail(email, password);
       console.log("Login response:", res);
-      navigate("/expense-dashboard"); // Redirect to dashboard
+      // Store userId separately for easy access
+      // localStorage.setItem("userId", res.userId);
+      // Store entire response object
+      localStorage.setItem("user", JSON.stringify(res));
+      navigate("/expenseDashboard"); // Redirect to dashboard
     } catch (err: any) {
       setError(err.message || "Failed to login with email.");
     } finally {
@@ -69,7 +73,7 @@ function SignIn() {
     try {
       const res = await loginWithMobile(mobileNo, otpCode);
       console.log("Mobile login response:", res);
-      navigate("/expense-dashboard"); // Redirect after OTP login
+      navigate("/expenseDashboard"); // Redirect after OTP login
     } catch (err: any) {
       setError(err.message || "Failed to login with OTP.");
     } finally {

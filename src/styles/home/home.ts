@@ -16,9 +16,11 @@ const HomeStyles = {
   },
   title: {
     marginBottom: "22px",
+    color: "black"
   },
   subTitle: {
     marginBottom: "24px",
+    color: "gray"
   },
   primaryBtn: {
     width: "100%",
