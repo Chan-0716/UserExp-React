@@ -23,9 +23,8 @@ function EmailSignup() {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      const result = await signUpWithEmail(form);
+      await signUpWithEmail(form);
       alert("Account created successfully!");
-      console.log(result);
       navigate("/signIn");
     } catch (err: any) {
       alert(err.message || "Signup failed");

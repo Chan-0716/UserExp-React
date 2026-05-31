@@ -1,4 +1,4 @@
-export const expenseStyles = {
+export const budgetStyles = {
   container: {
     minHeight: "100vh",
     width: "100%",
@@ -55,18 +55,9 @@ export const expenseStyles = {
     justifyContent: "center" as const,
     marginBottom: "20px",
   },
-  emailButton: {
+  submitButton: {
     padding: "12px 24px",
     backgroundColor: "#2196f3",
-    color: "white",
-    border: "none",
-    borderRadius: "15px",
-    cursor: "pointer",
-    fontSize: "16px",
-  },
-  mobileButton: {
-    padding: "12px 24px",
-    backgroundColor: "#1976d2",
     color: "white",
     border: "none",
     borderRadius: "15px",

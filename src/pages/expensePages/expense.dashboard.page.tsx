@@ -1,28 +1,44 @@
 import { useEffect, useState } from "react";
 import { expenseStyles } from "../../styles/expense/expense";
-import { getExpenseData } from "../../services/expense/expense";
+import { getExpenses } from "../../services/expense/expense";
 import { useNavigate } from "react-router";
 import dashboardNavItems from "../../utils/dashboardNavItems/dashboadNavItems";
 
-type ExpenseData = {
-  budgetAmount: number;
-  totalExpense: number;
-  remainingAmount: number;
-  recentExpenses: RecentExpense[];
-};
-
-type RecentExpense = {
+type RecentExpenses = {
   id: string;
-  name: string;
+  categoryId: number;
+  subCategoryId: number;
+  category: {
+    name: string;
+    icon: string;
+    color: string;
+  };
+  subCategory: {
+    name: string;
+    icon: string;
+    color: string;
+  };
   amount: number;
-  date: string;
-  iconUrl: string;
+  description: string;
+  createdAt: string;
+  paymentMethod: string;
 };
 
 function ExpenseDashboard() {
   const navigate = useNavigate();
-  const [data, setData] = useState<ExpenseData | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [expenses, setExpenses] = useState<RecentExpenses[]>([]);
+
+  const [summary, setSummary] = useState({
+    budgetAmount: 0,
+    totalExpense: 0,
+    remainingAmount: 0,
+  });
+  const [page, setPage] = useState(1);
+  const [limit] = useState(5);
+
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+
   const [error, setError] = useState("");
   const [activeNav, setActiveNav] = useState("dashboard");
 
@@ -31,6 +47,9 @@ function ExpenseDashboard() {
       try {
         // Get userId from localStorage
         // const userId = localStorage.getItem("userId");
+
+        if (loading) return;
+        setLoading(true);
 
         // Parse the full user object
         const userStr = localStorage.getItem("user");
@@ -43,9 +62,34 @@ function ExpenseDashboard() {
         const month = now.getMonth() + 1; // 1–12
         const year = now.getFullYear();
 
-        const resData = await getExpenseData(userId, month, year);
+        const resData = await getExpenses(userId, month, year, page);
 
-        setData(resData);
+        // Set summary data only on first page load
+        if (page === 1) {
+          setSummary({
+            budgetAmount: resData.budgetAmount,
+            totalExpense: resData.totalExpense,
+            remainingAmount: resData.remainingAmount,
+          });
+        }
+
+        // Append new expenses to existing list
+        setExpenses((prev) => {
+          const newExpenses = resData.recentExpenses || [];
+
+          return [
+            ...prev,
+            ...newExpenses.filter(
+              (expense: RecentExpenses) =>
+                !prev.some((item) => item.id === expense.id),
+            ),
+          ];
+        });
+
+        // Stop pagination if no more data
+        if ((resData.recentExpenses || []).length < limit) {
+          setHasMore(false);
+        }
       } catch (err) {
         setError("Failed to load data");
       } finally {
@@ -54,7 +98,25 @@ function ExpenseDashboard() {
     };
 
     fetchData();
-  }, []);
+  }, [page]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const fullHeight = document.documentElement.scrollHeight;
+
+      // Near bottom of page, load more
+      if (scrollTop + windowHeight >= fullHeight - 100 && hasMore && !loading) {
+        setPage((prev) => prev + 1);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [hasMore, loading]);
 
   const handleNav = (item: (typeof dashboardNavItems)[0]) => {
     setActiveNav(item.key);
@@ -72,17 +134,17 @@ function ExpenseDashboard() {
       <div style={expenseStyles.cardContainer}>
         <div style={expenseStyles.card}>
           <h4>Monthly Budget</h4>
-          <p>₹ {data?.budgetAmount}</p>
+          <p>₹ {summary?.budgetAmount}</p>
         </div>
 
         <div style={expenseStyles.card}>
           <h4>Total Spent</h4>
-          <p>₹ {data?.totalExpense}</p>
+          <p>₹ {summary?.totalExpense}</p>
         </div>
 
         <div style={expenseStyles.card}>
           <h4>Remaining</h4>
-          <p>₹ {data?.remainingAmount}</p>
+          <p>₹ {summary?.remainingAmount}</p>
         </div>
       </div>
 
@@ -99,26 +161,50 @@ function ExpenseDashboard() {
         </div>
 
         {/* Map your recent expenses here */}
-        {data?.recentExpenses.length === 0 ? (
+        {expenses?.length === 0 ? (
           <p>No recent expenses found.</p>
         ) : (
-          data?.recentExpenses.map((expense) => (
+          expenses?.map((expense) => (
             <div key={expense.id} style={expenseStyles.expenseItem}>
+              {/* Category Image */}
               <div style={expenseStyles.expenseIconCircle}>
                 <img
-                  src={expense.iconUrl}
-                  alt={expense.name}
+                  src={expense.category.icon}
+                  alt={expense.category.name}
                   style={expenseStyles.expenseIconImg}
                 />
               </div>
+
+              {/* Expense Info */}
               <div style={expenseStyles.expenseInfo}>
-                <div style={expenseStyles.expenseName}>{expense.name}</div>
-                <div style={expenseStyles.expenseDate}>{expense.date}</div>
-                <div>
-                  <div style={expenseStyles.expenseAmount}>
-                    - ₹ {expense.amount}
-                  </div>
+                {/* Category Name */}
+                <div style={expenseStyles.expenseDate}>
+                  {expense.category.name}
                 </div>
+
+                {/* SubCategory Name */}
+                <div style={expenseStyles.expenseName}>
+                  {expense.subCategory.name}
+                </div>
+
+                {/* Date */}
+                <div style={expenseStyles.expenseDate}>
+                  {new Date(expense.createdAt).toLocaleDateString()}
+                </div>
+
+                {/* Amount */}
+                <div style={expenseStyles.expenseAmount}>
+                  - ₹ {expense.amount}
+                </div>
+              </div>
+
+              {/* SubCategory Image */}
+              <div style={expenseStyles.expenseIconCircle}>
+                <img
+                  src={expense.subCategory.icon}
+                  alt={expense.subCategory.name}
+                  style={expenseStyles.expenseIconImg}
+                />
               </div>
             </div>
           ))
