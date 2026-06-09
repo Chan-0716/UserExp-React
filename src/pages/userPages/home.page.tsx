@@ -24,15 +24,12 @@ function Home() {
           Continue with Mobile
         </button>
 
-        <p>
-      Already have an account?{" "}
-      <span
-        style={HomeStyles.link}
-        onClick={() => navigate('/signIn')}
-      >
-        Login
-      </span>
-    </p>
+        <p style={HomeStyles.loginText}>
+          Already have an account?{" "}
+          <span style={HomeStyles.link} onClick={() => navigate("/signIn")}>
+            Login
+          </span>
+        </p>
       </div>
     </div>
   );

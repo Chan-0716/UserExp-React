@@ -23,7 +23,7 @@ function AddBudget() {
         budgetAmount: budget,
         month,
         year,
-      };      
+      };
       await createBudget(user.userId, budgetPayload);
       navigate("/expenseDashboard");
     } catch (err: any) {
@@ -33,40 +33,66 @@ function AddBudget() {
     }
   };
 
-  return (
-    <div style={budgetStyles.container}>
-      <div style={budgetStyles.card}>
-        <h2 style={budgetStyles.title}>Add Budget</h2>
+return (
+  <div style={budgetStyles.container}>
+    <h1 style={budgetStyles.title}>Add Budget</h1>
 
-        <div style={budgetStyles.buttonContainer}>
-          <input
-            style={budgetStyles.input}
-            placeholder="budget ammount"
-            value={budget}
-            onChange={(e) => setBudget(Number(e.target.value))}
-          />
-          <br />
-          <br />
-          <input
-            type="month"
-            style={budgetStyles.input}
-            placeholder="month and year"
-            value={monthAndYear}
-            onChange={(e) => setMonthAndYear(e.target.value)}
-          />
-          <br />
-          <br />
-          <button
-            style={budgetStyles.submitButton}
-            onClick={handleSubmit}
-            disabled={loading}
-          >
-            {loading ? "Submiting..." : "Submit"}
-          </button>
-        </div>
+    {/* Budget Form */}
+    <div style={budgetStyles.formCard}>
+      <h3 style={budgetStyles.sectionTitle}>Budget Information</h3>
+
+      <label style={budgetStyles.label}>Budget Amount</label>
+      <input
+        type="number"
+        style={budgetStyles.input}
+        placeholder="Enter budget amount"
+        value={budget}
+        onChange={(e) => setBudget(Number(e.target.value))}
+      />
+
+      <label style={budgetStyles.label}>Select Month</label>
+      <input
+        type="month"
+        style={budgetStyles.input}
+        value={monthAndYear}
+        onChange={(e) => setMonthAndYear(e.target.value)}
+      />
+    </div>
+
+    {/* Budget Preview */}
+    <div style={budgetStyles.previewCard}>
+      <h3 style={budgetStyles.sectionTitle}>Budget Preview</h3>
+
+      <div style={budgetStyles.previewRow}>
+        <span>Budget Amount</span>
+        <strong>₹ {budget || 0}</strong>
+      </div>
+
+      <div style={budgetStyles.previewRow}>
+        <span>Selected Month</span>
+        <strong>{monthAndYear || "-"}</strong>
       </div>
     </div>
-  );
+
+    {/* Action Buttons */}
+    <div style={budgetStyles.buttonRow}>
+      <button
+        style={budgetStyles.cancelButton}
+        onClick={() => navigate("/expenseDashboard")}
+      >
+        Cancel
+      </button>
+
+      <button
+        style={budgetStyles.submitButton}
+        onClick={handleSubmit}
+        disabled={loading}
+      >
+        {loading ? "Creating..." : "Create Budget"}
+      </button>
+    </div>
+  </div>
+);
 }
 
 export default AddBudget;

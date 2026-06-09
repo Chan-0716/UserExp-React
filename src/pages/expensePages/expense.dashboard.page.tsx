@@ -82,7 +82,7 @@ function ExpenseDashboard() {
             ...newExpenses.filter(
               (expense: RecentExpenses) =>
                 !prev.some((item) => item.id === expense.id),
-            ),
+             ),
           ];
         });
 

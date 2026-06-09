@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { sendOtp, signUpWithMobile, verifyOtp } from "../../services/userAuth/auth";
 import { authStyles } from "../../styles/userAuth/auth";
+import { useNavigate } from "react-router-dom";
 
 
 function MobileSignup() {
   const [step, setStep] = useState(1);
+  const navigate = useNavigate();
   const [mobileNo, setMobile] = useState("");
   const [otpCode, setOtp] = useState("");
   const [form, setForm] = useState({ dob: "", address: "", location: "" });
@@ -44,6 +46,7 @@ function MobileSignup() {
       const payload = { mobileNo: mobileNo, ...form };
       await signUpWithMobile(payload);
       alert("Account created successfully!");
+      navigate("/signIn");
     } catch (err: any) {
       alert(err.message || "Signup failed");
     } finally {
