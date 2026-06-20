@@ -17,7 +17,7 @@ type BudgetData = {
 export const getExpenses = async (userId: string,
   month: number,
   year: number, page: number) => {
-  const response = await axios.get(`${API_URL}/api/expense/expenseDashboard`, 
+  const response = await axios.get(`/api/expense/expenseDashboard`, 
     {
       params: {
       userId,
@@ -30,7 +30,7 @@ export const getExpenses = async (userId: string,
 };
 
 export const addExpense = async (expenseData: ExpenseData, userId: string) => {
-  const response = await axios.post(`${API_URL}/api/expense/createExpense`, 
+  const response = await axios.post(`/api/expense/createExpense`, 
     expenseData,
     {
       params: {
@@ -41,7 +41,7 @@ export const addExpense = async (expenseData: ExpenseData, userId: string) => {
 };
 
 export const fetchCategories = async (userId: string) => {
-  const response = await axios.get(`${API_URL}/api/expense/getAllCategories`, {
+  const response = await axios.get(`/api/expense/getAllCategories`, {
     params: {
       userId
     }
@@ -50,7 +50,7 @@ export const fetchCategories = async (userId: string) => {
 };
 
 export const fetchSubCategories = async (categoryId: number) => {
-  const response = await axios.get(`${API_URL}/api/expense/getSubCategories`, {
+  const response = await axios.get(`/api/expense/getSubCategories`, {
     params: {
       categoryId
     }
@@ -59,7 +59,7 @@ export const fetchSubCategories = async (categoryId: number) => {
 };
 
 export const createBudget = async (userId: string, budgetDate: BudgetData) => {
-  const response = await axios.post(`${API_URL}/api/expense/createBudget`, 
+  const response = await axios.post(`/api/expense/createBudget`, 
     budgetDate,
     {
       params: {
@@ -70,7 +70,7 @@ export const createBudget = async (userId: string, budgetDate: BudgetData) => {
 };
 
 export const fetchExpenseReport = async (userId: string, month: number, year: number) => {
-  const response = await axios.get(`${API_URL}/api/expense/expenseReport`,
+  const response = await axios.get(`/api/expense/expenseReport`,
     {
       params: {
         userId,
