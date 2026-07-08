@@ -1,4 +1,8 @@
 import axios from "axios";
+const api = axios.create({
+  baseURL: import.meta.env.USER_VITE_API_URL,
+});
+
 
 type ExpenseData = {
   categoryId: number;
@@ -16,7 +20,7 @@ type BudgetData = {
 export const getExpenses = async (userId: string,
   month: number,
   year: number, page: number) => {
-  const response = await axios.get(`/api/expense/expenseDashboard`, 
+  const response = await api.get(`/api/expense/expenseDashboard`, 
     {
       params: {
       userId,
@@ -29,7 +33,7 @@ export const getExpenses = async (userId: string,
 };
 
 export const addExpense = async (expenseData: ExpenseData, userId: string) => {
-  const response = await axios.post(`/api/expense/createExpense`, 
+  const response = await api.post(`/api/expense/createExpense`, 
     expenseData,
     {
       params: {
@@ -40,7 +44,7 @@ export const addExpense = async (expenseData: ExpenseData, userId: string) => {
 };
 
 export const fetchCategories = async (userId: string) => {
-  const response = await axios.get(`/api/expense/getAllCategories`, {
+  const response = await api.get(`/api/expense/getAllCategories`, {
     params: {
       userId
     }
@@ -49,7 +53,7 @@ export const fetchCategories = async (userId: string) => {
 };
 
 export const fetchSubCategories = async (categoryId: number) => {
-  const response = await axios.get(`/api/expense/getSubCategories`, {
+  const response = await api.get(`/api/expense/getSubCategories`, {
     params: {
       categoryId
     }
@@ -58,7 +62,7 @@ export const fetchSubCategories = async (categoryId: number) => {
 };
 
 export const createBudget = async (userId: string, budgetDate: BudgetData) => {
-  const response = await axios.post(`/api/expense/createBudget`, 
+  const response = await api.post(`/api/expense/createBudget`, 
     budgetDate,
     {
       params: {
@@ -69,7 +73,7 @@ export const createBudget = async (userId: string, budgetDate: BudgetData) => {
 };
 
 export const fetchExpenseReport = async (userId: string, month: number, year: number) => {
-  const response = await axios.get(`/api/expense/expenseReport`,
+  const response = await api.get(`/api/expense/expenseReport`,
     {
       params: {
         userId,
