@@ -2,7 +2,6 @@ import axios from "axios";
 const api = axios.create({
   baseURL: import.meta.env.VITE_USER_API_URL,
 });
-
 export default api;
 
 export const signUpWithEmail = async (data: any) => {
